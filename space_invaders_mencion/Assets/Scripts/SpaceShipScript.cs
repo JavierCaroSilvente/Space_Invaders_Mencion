@@ -12,6 +12,8 @@ public class SpaceShipScript : MonoBehaviour
 
     public Transform initPositionTorpedo;
 
+    public int totalBulletsInScene = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,9 +36,23 @@ public class SpaceShipScript : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            GameObject newTorpedo = Instantiate(torpedo, initPositionTorpedo.transform.position, Quaternion.identity);
-            newTorpedo.name = "Torpedo";
-            Destroy(newTorpedo, 3.5f);
+            if (totalBulletsInScene == 0)
+            {
+                totalBulletsInScene++;
+                GameObject newTorpedo = Instantiate(torpedo, initPositionTorpedo.transform.position, Quaternion.identity);
+                newTorpedo.name = "Torpedo";
+                newTorpedo.tag = "Torpedo";
+                StartCoroutine(destroyBullet(newTorpedo));
+            }
         }
     }
+
+    IEnumerator destroyBullet(GameObject bullet)
+    {
+        yield return new WaitForSeconds(3.5f);
+        Destroy(bullet);
+        //totalBulletsInScene = 0;
+    }
 }
+
+

@@ -58,4 +58,15 @@ public class Enemy : MonoBehaviour
             currentState = state;
         }
     }
+
+   
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Torpedo")
+        {
+            Debug.Log("colisiona con torpedo");
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
+    }
 }
